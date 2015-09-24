@@ -52,8 +52,8 @@ namespace BarcodeBuddyInventory
                     // let's examine the values in each row.  There should be two, an item number and a description.
                     foreach (string s in row)
                     {
-                        if (parseItemCount == 0) itemNumber = s;   // the first value should be the item ID
-                        if (parseItemCount == 1) itemDescription = s;   // the second value should be the description
+                        if (parseItemCount == 0) itemNumber = xmlIOUtilities.SanitizeXmlString(s);   // the first value should be the item ID
+                        if (parseItemCount == 1) itemDescription = xmlIOUtilities.SanitizeXmlString(s);   // the second value should be the description
                         parseItemCount++;
                     }
                     // ok, so we've parsed that line and thrown away anything except the first two values.
