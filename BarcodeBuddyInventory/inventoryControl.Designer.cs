@@ -35,6 +35,7 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstItems = new System.Windows.Forms.ListBox();
             this.importFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.txtItemCount = new System.Windows.Forms.TextBox();
@@ -42,8 +43,13 @@
             this.handHeldScanner = new AxOposScanner_CCO.AxOPOSScanner();
             this.lstBarcodes = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtGoToItem = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtGoToDescription = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btnGoToDescription = new System.Windows.Forms.Button();
             this.mnuFileMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.handHeldScanner)).BeginInit();
             this.SuspendLayout();
@@ -54,7 +60,7 @@
             this.fileToolStripMenuItem});
             this.mnuFileMenu.Location = new System.Drawing.Point(0, 0);
             this.mnuFileMenu.Name = "mnuFileMenu";
-            this.mnuFileMenu.Size = new System.Drawing.Size(917, 24);
+            this.mnuFileMenu.Size = new System.Drawing.Size(973, 24);
             this.mnuFileMenu.TabIndex = 0;
             this.mnuFileMenu.Text = "FileMenu";
             // 
@@ -98,6 +104,13 @@
             this.importToolStripMenuItem.Text = "&Import...";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Text = "E&xit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // lstItems
             // 
             this.lstItems.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -135,39 +148,92 @@
             this.handHeldScanner.Location = new System.Drawing.Point(35, 375);
             this.handHeldScanner.Name = "handHeldScanner";
             this.handHeldScanner.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("handHeldScanner.OcxState")));
-            this.handHeldScanner.Size = new System.Drawing.Size(192, 30);
+            this.handHeldScanner.Size = new System.Drawing.Size(192, 192);
             this.handHeldScanner.TabIndex = 4;
             this.handHeldScanner.DataEvent += new AxOposScanner_CCO._IOPOSScannerEvents_DataEventEventHandler(this.handHeldScanner_DataEvent);
             // 
             // lstBarcodes
             // 
             this.lstBarcodes.FormattingEnabled = true;
-            this.lstBarcodes.Location = new System.Drawing.Point(641, 88);
+            this.lstBarcodes.Location = new System.Drawing.Point(639, 72);
             this.lstBarcodes.Name = "lstBarcodes";
-            this.lstBarcodes.Size = new System.Drawing.Size(173, 238);
+            this.lstBarcodes.Size = new System.Drawing.Size(173, 212);
             this.lstBarcodes.TabIndex = 5;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(647, 72);
+            this.label1.Location = new System.Drawing.Point(645, 56);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(107, 13);
             this.label1.TabIndex = 6;
             this.label1.Text = "Associated Barcodes";
             // 
-            // exitToolStripMenuItem
+            // label2
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exitToolStripMenuItem.Text = "E&xit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(49, 56);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(79, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Inventory Items";
+            // 
+            // txtGoToItem
+            // 
+            this.txtGoToItem.Location = new System.Drawing.Point(315, 349);
+            this.txtGoToItem.Name = "txtGoToItem";
+            this.txtGoToItem.Size = new System.Drawing.Size(308, 20);
+            this.txtGoToItem.TabIndex = 8;
+            this.txtGoToItem.TextChanged += new System.EventHandler(this.txtGoToItem_TextChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(246, 352);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(63, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Go To Item:";
+            // 
+            // txtGoToDescription
+            // 
+            this.txtGoToDescription.Location = new System.Drawing.Point(315, 378);
+            this.txtGoToDescription.Name = "txtGoToDescription";
+            this.txtGoToDescription.Size = new System.Drawing.Size(307, 20);
+            this.txtGoToDescription.TabIndex = 10;
+            this.txtGoToDescription.TextChanged += new System.EventHandler(this.txtGoToDescription_TextChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(246, 381);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(63, 13);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Description:";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
+            // 
+            // btnGoToDescription
+            // 
+            this.btnGoToDescription.Location = new System.Drawing.Point(629, 366);
+            this.btnGoToDescription.Name = "btnGoToDescription";
+            this.btnGoToDescription.Size = new System.Drawing.Size(92, 43);
+            this.btnGoToDescription.TabIndex = 12;
+            this.btnGoToDescription.Text = "Search for Description";
+            this.btnGoToDescription.UseVisualStyleBackColor = true;
+            this.btnGoToDescription.Click += new System.EventHandler(this.btnGoToDescription_Click);
             // 
             // inventoryControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(917, 417);
+            this.ClientSize = new System.Drawing.Size(973, 417);
+            this.Controls.Add(this.btnGoToDescription);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.txtGoToDescription);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtGoToItem);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lstBarcodes);
             this.Controls.Add(this.handHeldScanner);
@@ -204,6 +270,12 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtGoToItem;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtGoToDescription;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnGoToDescription;
     }
 }
 

@@ -34,6 +34,7 @@ namespace BarcodeBuddyInventory
 {
     public partial class inventoryControl : Form
     {
+        private AutoCompleteStringCollection ItemCollection;
  
         public inventoryControl()
         {
@@ -77,21 +78,64 @@ namespace BarcodeBuddyInventory
         {
             Dictionary<string, inventoryItem> items = inventoryItem.itemDictionary;
             lstItems.Items.Clear();
+            ItemCollection = new AutoCompleteStringCollection();
             foreach (KeyValuePair<string, inventoryItem> entry in items)
             {
                 lstItems.Items.Add(entry.Value);
+                ItemCollection.Add(entry.Key + ", " + entry.Value.Description);
             }
+            prepareGoToItem();
+        }
+
+        private void prepareGoToItem()
+        {
+            txtGoToItem.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            txtGoToItem.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            txtGoToItem.AutoCompleteCustomSource = ItemCollection;
+        }
+
+        private void txtGoToItem_TextChanged(object sender, EventArgs e)
+        {
+            // Now that we have an item, let's position the item list at that item.
+            int index = txtGoToItem.Text.IndexOf(",");
+            if (index > 0)
+            {
+                inventoryItem itm = inventoryItem.lookUpItem(txtGoToItem.Text.Substring(0, index));
+                if (itm != null)
+                {
+                    // that barcode is already known, so position the item list to that item and refresh the barcode list
+                    lstItems.SelectedItem = itm;
+                    updateBarcodeList(itm);
+                }
+            }
+        }
+
+        private void btnGoToDescription_Click(object sender, EventArgs e)
+        {
+            // Now that we have a description, let's position the item list at that item.
+            inventoryItem itm = inventoryItem.lookUpDescription(txtGoToDescription.Text);
+            if (itm != null)
+            {
+                lstItems.SelectedItem = itm;
+                updateBarcodeList(itm);
+            }
+        }
+
+        private void txtGoToDescription_TextChanged(object sender, EventArgs e)
+        {
         }
 
         private void updateBarcodeList(inventoryItem itm)
         {
             lstBarcodes.Items.Clear();
-            Dictionary<string, barcode> bcodes = itm.BarcodeList;
-            foreach (KeyValuePair<string, barcode> b in bcodes)
+            if (itm != null)
             {
-                lstBarcodes.Items.Add(b.Value);
+                Dictionary<string, barcode> bcodes = itm.BarcodeList;
+                foreach (KeyValuePair<string, barcode> b in bcodes)
+                {
+                    lstBarcodes.Items.Add(b.Value);
+                }
             }
-            
         }
 
         private void connectScanner()
@@ -133,6 +177,8 @@ namespace BarcodeBuddyInventory
             // We got a scanner event!
             String scanData = handHeldScanner.ScanData.ToString();
             scanData = xmlIOUtilities.SanitizeXmlString(scanData);
+            scanData = xmlIOUtilities.removeReturns(scanData);
+
             handHeldScanner.ClearInput();    // clear the data buffer
             handHeldScanner.DataEventEnabled = true;   // have to set true each timeitem  or it won't rescan
 
@@ -184,6 +230,7 @@ namespace BarcodeBuddyInventory
             // first, let's select and open the desired file.
             try
             {
+                importFileDialog.Reset();
                 DialogResult result = importFileDialog.ShowDialog();
                 if (result == DialogResult.OK)
                 {
@@ -195,6 +242,7 @@ namespace BarcodeBuddyInventory
                         // We loaded some items, so let's update the item inventory list.
                         MessageBox.Show("Successfully Loaded " + numberOfItemsLoaded.ToString() + " Items.");
                         updateInventoryList();
+                        updateBarcodeList(null);
                         txtItemCount.Text = lstItems.Items.Count.ToString();
                     }
                 }
@@ -210,6 +258,7 @@ namespace BarcodeBuddyInventory
         {
             try
             {
+                saveFileDialog.Reset();
                 saveFileDialog.AddExtension = true;
                 saveFileDialog.CheckFileExists = true;
                 saveFileDialog.OverwritePrompt = false;
@@ -230,6 +279,7 @@ namespace BarcodeBuddyInventory
         {
             try
             {
+                saveFileDialog.Reset();
                 saveFileDialog.OverwritePrompt = true;
                 saveFileDialog.AddExtension = true;
                 saveFileDialog.DefaultExt = ".xml";
@@ -249,6 +299,11 @@ namespace BarcodeBuddyInventory
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
