@@ -50,6 +50,7 @@
             this.txtGoToDescription = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btnGoToDescription = new System.Windows.Forms.Button();
+            this.btnRemoveBarcode = new System.Windows.Forms.Button();
             this.mnuFileMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.handHeldScanner)).BeginInit();
             this.SuspendLayout();
@@ -79,35 +80,35 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.openToolStripMenuItem.Text = "&Load File...";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.saveToolStripMenuItem.Text = "&Save...";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.saveAsToolStripMenuItem.Text = "Save &As...";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.importToolStripMenuItem.Text = "&Import...";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -159,6 +160,8 @@
             this.lstBarcodes.Name = "lstBarcodes";
             this.lstBarcodes.Size = new System.Drawing.Size(173, 212);
             this.lstBarcodes.TabIndex = 5;
+            this.lstBarcodes.SelectedIndexChanged += new System.EventHandler(this.lstBarcodes_SelectedIndexChanged);
+            this.lstBarcodes.Leave += new System.EventHandler(this.lstBarcodes_Leave);
             // 
             // label1
             // 
@@ -223,11 +226,23 @@
             this.btnGoToDescription.UseVisualStyleBackColor = true;
             this.btnGoToDescription.Click += new System.EventHandler(this.btnGoToDescription_Click);
             // 
+            // btnRemoveBarcode
+            // 
+            this.btnRemoveBarcode.Enabled = false;
+            this.btnRemoveBarcode.Location = new System.Drawing.Point(818, 72);
+            this.btnRemoveBarcode.Name = "btnRemoveBarcode";
+            this.btnRemoveBarcode.Size = new System.Drawing.Size(75, 40);
+            this.btnRemoveBarcode.TabIndex = 13;
+            this.btnRemoveBarcode.Text = "Remove Barcode";
+            this.btnRemoveBarcode.UseVisualStyleBackColor = true;
+            this.btnRemoveBarcode.Click += new System.EventHandler(this.btnRemoveBarcode_Click);
+            // 
             // inventoryControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(973, 417);
+            this.Controls.Add(this.btnRemoveBarcode);
             this.Controls.Add(this.btnGoToDescription);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtGoToDescription);
@@ -276,6 +291,7 @@
         private System.Windows.Forms.TextBox txtGoToDescription;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnGoToDescription;
+        private System.Windows.Forms.Button btnRemoveBarcode;
     }
 }
 

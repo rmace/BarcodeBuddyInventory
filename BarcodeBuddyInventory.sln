@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeBuddyInventory", "BarcodeBuddyInventory\BarcodeBuddyInventory.csproj", "{7C4D8D45-BF5F-4141-A39F-E8AAD547FF8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeBuddyScan", "BarcodeBuddyScan\BarcodeBuddyScan.csproj", "{2C2A92A7-65AE-44F8-8D6B-99B7175BBFEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppControlUtilities", "MutexManager\AppControlUtilities.csproj", "{14836D21-B6CB-45A1-9644-8FEBEA7E0793}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{7C4D8D45-BF5F-4141-A39F-E8AAD547FF8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C4D8D45-BF5F-4141-A39F-E8AAD547FF8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C4D8D45-BF5F-4141-A39F-E8AAD547FF8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C2A92A7-65AE-44F8-8D6B-99B7175BBFEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C2A92A7-65AE-44F8-8D6B-99B7175BBFEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C2A92A7-65AE-44F8-8D6B-99B7175BBFEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C2A92A7-65AE-44F8-8D6B-99B7175BBFEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14836D21-B6CB-45A1-9644-8FEBEA7E0793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14836D21-B6CB-45A1-9644-8FEBEA7E0793}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14836D21-B6CB-45A1-9644-8FEBEA7E0793}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14836D21-B6CB-45A1-9644-8FEBEA7E0793}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

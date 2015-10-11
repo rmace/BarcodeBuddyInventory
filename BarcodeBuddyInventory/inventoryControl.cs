@@ -305,5 +305,28 @@ namespace BarcodeBuddyInventory
         {
 
         }
+
+        private void lstBarcodes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lstBarcodes.SelectedItems.Count > 0)
+            {
+                btnRemoveBarcode.Enabled = true;
+            }
+            else btnRemoveBarcode.Enabled = false;
+        }
+
+        private void lstBarcodes_Leave(object sender, EventArgs e)
+        {
+            if (lstBarcodes.SelectedItems.Count > 0) btnRemoveBarcode.Enabled = true;
+            else btnRemoveBarcode.Enabled = false;
+        }
+
+        private void btnRemoveBarcode_Click(object sender, EventArgs e)
+        {
+            barcode b = (barcode) lstBarcodes.SelectedItem;
+            inventoryItem i = b.getItem();
+            i.removeBarcode(b);
+            updateBarcodeList(i);
+        }
     }
 }
