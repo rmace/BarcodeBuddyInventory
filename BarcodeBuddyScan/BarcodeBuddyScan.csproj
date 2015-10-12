@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="chooseItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="chooseItem.Designer.cs">
+      <DependentUpon>chooseItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomApplicationContext.cs" />
     <Compile Include="Inventory.cs">
       <SubType>Form</SubType>
@@ -64,6 +70,9 @@
     <Compile Include="ScannerConfig.Designer.cs">
       <DependentUpon>ScannerConfig.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="chooseItem.resx">
+      <DependentUpon>chooseItem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Inventory.resx">
       <DependentUpon>Inventory.cs</DependentUpon>
     </EmbeddedResource>
@@ -81,7 +90,7 @@
       <DependentUpon>ScannerConfig.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Compile Include="Properties\Settings.Designer.cs">

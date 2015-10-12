@@ -2,10 +2,10 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BarcodeBuddyScan.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="USBScannerName" Type="System.String" Scope="Application">
+    <Setting Name="USBScannerName" Type="System.String" Scope="User">
       <Value Profile="(Default)">USBHHScanner</Value>
     </Setting>
-    <Setting Name="FilePath" Type="System.String" Scope="Application">
+    <Setting Name="FilePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

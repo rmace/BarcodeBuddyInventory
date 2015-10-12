@@ -19,9 +19,31 @@ Theory of Operation
   manages it from there.
 
   The first thing that happens is the constructor is called, and everything gets
-  initialized.  We create a Scanner Configuration Form and then tell it to connect
-  to the scanner.  We create a menu for the notifyIcon on the system tray.
+  initialized.   We create a notifyIcon on the system tray and give it a menu.
+  We create a Scanner Configuration Form and then tell it to connect
+  to the scanner. 
+  We create a Load Inventory Form and then tell it to load the inventory file
+  into memory.
+  Finally, we create a Choose Item Form.
 
+  After that, the application reacts to the following events:
+
+    the scanner triggers an event and sends us some data - this event is handled
+    by an event handler on the Scanner Configuration Form.  It basically looks up
+    the item corresponding to the scanned data and puts it in the keyboard buffer.
+    In the event that the scanned barcode data isn't in memory and has never been
+    assigned to an item, then the application opens the Choose Item form and allows
+    the user to select the item that he wishes to associate with the new barcode.
+    You can look at the Scanner Configuration Form for details.
+
+    the user opens the system tray icon menu and selects "Scanner Configuration".
+    When that happens, we load the Scanner Configuration Form and give it focus.
+    The user can use the scanner configuration form to check the health of the
+    scanner.
+
+    the user opens the system tray icon menu and selects "Load Inventory File".
+    When that happens, we load the Inventory Form and give it focus.  The user can
+    use the Inventory form to specify the Inventory filename and load it into memory.
     
 Date:  10/09/2015
 Programmer:  Russell Mace 
@@ -45,80 +67,27 @@ namespace BarcodeBuddyScan
     public class CustomApplicationContext : ApplicationContext
     {
         // Icon graphic from www.iconarchive.com
-        private static readonly string DefaultTooltip = "Configure Barcode Scanner";
+        private static readonly string DefaultTooltip = "Barcode Buddy Scan Tool";
 
         /// <summary>
         /// This class should be created and passed into Application.Run( ... )
+        /// </summary>
+
+        /// <summary>
+        /// The constructor for the CustomApplicationContext class.
+        /// It performs all the initialization for the program, putting the icon
+        /// in the system tray, building a menu for it, and then initializing all
+        /// the forms with their data.
         /// </summary>
         public CustomApplicationContext()
         {
             InitializeContext();
             BuildMenu();
             InitializeScannerConfigForm();
+            InitializeInventoryForm();
         }
 
-        private void InitializeScannerConfigForm()
-        {
-            if (scanForm == null)
-            {
-                scanForm = new ScannerConfig { ScannerName = Properties.Settings.Default.USBScannerName };
-            }
-            scanForm.FormClosed += scanForm_Closed;
-            scanForm.connectScanner();
-        }
-
-        #region the child forms
-
-        //private DetailsForm detailsForm;
-        private ScannerConfig scanForm;
-        //private System.Windows.Forms.Form scanForm;
-
-        private void ShowScanForm()
-        {
-            if (scanForm == null)
-            {
-                InitializeScannerConfigForm();
-                scanForm.Show();
-            }
-            else
-            {
-                scanForm.Activate();
-            }
-        }
-
-
-        private void ShowInventoryLoadForm()
-        {
-            //if (detailsForm == null)
-            //{
-            //    detailsForm = new DetailsForm { HostManager = hostManager };
-            //    detailsForm.Closed += detailsForm_Closed; // avoid reshowing a disposed form
-            //    detailsForm.Show();
-            //}
-            //else { detailsForm.Activate(); }
-        }
-
-        private void notifyIcon_DoubleClick(object sender, EventArgs e) { ShowScanForm(); }
-
-        // From http://stackoverflow.com/questions/2208690/invoke-notifyicons-context-menu
-        private void notifyIcon_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
-                mi.Invoke(notifyIcon, null);
-            }
-        }
-
-        // null out the forms so we know to create a new one.
-        private void scanForm_Closed(object sender, EventArgs e) { scanForm = null; }
-
-        #endregion the child forms
-
-        #region generic code framework
-
-        private System.ComponentModel.IContainer components;    // a list of components to dispose when the context is disposed
-        private NotifyIcon notifyIcon;                          // the icon that sits in the system tray
+        #region Initialization Methods
 
         /// <summary>
         /// BuildMenu populates the context menu.  It will have the following entries:
@@ -145,6 +114,91 @@ namespace BarcodeBuddyScan
                 exitItem_Click);
             if (t != null) notifyIcon.ContextMenuStrip.Items.Add(t);
         }
+
+        /// <summary>
+        /// This method creates a ScannerConfig form and connects it to the scanner.
+        /// </summary>
+        private void InitializeScannerConfigForm()
+        {
+            if (scanForm == null)
+            {
+                scanForm = new ScannerConfig { ScannerName = Properties.Settings.Default.USBScannerName };
+            }
+            scanForm.FormClosed += scanForm_Closed;
+            scanForm.connectScanner();
+        }
+
+        private void InitializeInventoryForm()
+        {
+            if (inventoryForm == null)
+            {
+                inventoryForm = new Inventory();
+            }
+            inventoryForm.FormClosed += inventoryForm_Closed;
+            inventoryForm.initializeInventoryForm();
+
+        }
+        #endregion Initialization Methods
+
+        #region the child forms
+
+        private ScannerConfig scanForm;
+        private Inventory inventoryForm;
+
+          
+        private void ShowScanForm()
+        {
+            try
+            {
+                if (scanForm == null)
+                {
+                    InitializeScannerConfigForm();
+                }
+                scanForm.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unexpected Error while attempting to show the Scanner Configuration form: " + ex.ToString(), "Load Inventory File", MessageBoxButtons.OK);
+            }
+        }
+
+
+        private void ShowInventoryLoadForm()
+        {
+            try
+            {
+                if (inventoryForm == null)
+                {
+                    InitializeInventoryForm();
+                }
+                inventoryForm.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unexpected Error while attempting to show the Inventory Load form: " + ex.ToString(), "Load Inventory File", MessageBoxButtons.OK);
+            }
+        }
+
+        // From http://stackoverflow.com/questions/2208690/invoke-notifyicons-context-menu
+        private void notifyIcon_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
+                mi.Invoke(notifyIcon, null);
+            }
+        }
+
+        // null out the forms so we know to create a new one.
+        private void scanForm_Closed(object sender, EventArgs e) { scanForm = null; }
+        private void inventoryForm_Closed(object sender, EventArgs e) { inventoryForm = null; }
+
+        #endregion the child forms
+
+        #region generic code framework
+
+        private System.ComponentModel.IContainer components;    // a list of components to dispose when the context is disposed
+        private NotifyIcon notifyIcon;                          // the icon that sits in the system tray
 
         private void scannerConfiguration_Click(object sender, EventArgs e)
         {
@@ -192,7 +246,9 @@ namespace BarcodeBuddyScan
         protected override void ExitThreadCore()
         {
             // before we exit, let forms clean themselves up.
+            // if we don't, the program can never really exit.
             if (scanForm != null) { scanForm.Close(); }
+            if (inventoryForm != null) { inventoryForm.Close(); }
 
             notifyIcon.Visible = false; // should remove lingering tray icon
             base.ExitThreadCore();
@@ -213,9 +269,6 @@ namespace BarcodeBuddyScan
                 Text = DefaultTooltip,
                 Visible = true
             };
-            // This event will fires when the user opens the context menu
-            // on the system tray icon
-            notifyIcon.MouseUp += notifyIcon_MouseUp;
         }
 
         /// <summary>

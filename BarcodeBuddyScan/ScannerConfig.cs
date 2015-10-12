@@ -33,6 +33,7 @@ namespace BarcodeBuddyScan
     {
         // private members
         private String scannerName;
+        private chooseItem chooseForm;
 
         // The scanner name can be set and retrieved through this property
         public string ScannerName
@@ -73,18 +74,21 @@ namespace BarcodeBuddyScan
             }
         }
 
-        private void insertItemIntoKeyboardBuffer(inventoryItem itm)
+        public void insertItemIntoKeyboardBuffer(inventoryItem itm)
         {
-            // do stuff here
+            System.Windows.Forms.SendKeys.Send(itm.ItemID + "\r");
         }
 
         private void handHeldScanner_DataEvent(object sender, AxOposScanner_CCO._IOPOSScannerEvents_DataEventEvent e)
         {
             // We got a scanner event!
+            // First, let's turn it into text and get rid of any garbage characters
+            // in it.  We want it safe for Xml and have no line feeds at the end.
             String scanData = handHeldScanner.ScanData.ToString();
             scanData = xmlIOUtilities.SanitizeXmlString(scanData);
             scanData = xmlIOUtilities.removeReturns(scanData);
 
+            // release the scanner for next time so that it can give us the next scan.
             handHeldScanner.ClearInput();    // clear the data buffer
             handHeldScanner.DataEventEnabled = true;   // have to set true each time or it won't rescan
 
@@ -92,18 +96,36 @@ namespace BarcodeBuddyScan
             barcode b = barcode.findBarcode(scanData);
             if (b != null)
             {
+                // Yay!  We found the barcode already in our list.
+                // get the item that goes with it.
                 inventoryItem itm = b.getItem();
                 if (itm != null)
                 {
+                    // and put the item into the keyboard
                     insertItemIntoKeyboardBuffer(itm);
                 }
             }
             else
             {
-                // ask the operator to identify the item that should go
-                // with this barcode and update the inventory with the
-                // newly selected barcode data.
+                // Dang.  We didn't find the barcode already in our list,
+                // but that's ok.  We have a form that allows the user to
+                // choose the item that goes with the barcode.
+                // Create an instance of that form and populate it
+                // with the barcode data, and pop it up on the screen.
+                chooseForm = new chooseItem();
+                chooseForm.ScannerFormReference = this;
+                chooseForm.BarcodeData = scanData;
+                chooseForm.Show();
             }
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            if (chooseForm != null)
+            {
+                chooseForm.Close();
+            }
+            base.OnFormClosed(e);
         }
     }
 }
