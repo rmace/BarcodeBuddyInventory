@@ -60,6 +60,7 @@
             this.lstItems.Name = "lstItems";
             this.lstItems.Size = new System.Drawing.Size(583, 225);
             this.lstItems.TabIndex = 2;
+            this.lstItems.Click += new System.EventHandler(this.lstItems_Click);
             this.lstItems.SelectedIndexChanged += new System.EventHandler(this.lstItems_SelectedIndexChanged);
             // 
             // label2
@@ -77,6 +78,7 @@
             this.txtGoToItem.Name = "txtGoToItem";
             this.txtGoToItem.Size = new System.Drawing.Size(369, 20);
             this.txtGoToItem.TabIndex = 4;
+            this.txtGoToItem.TextChanged += new System.EventHandler(this.txtGoToItem_TextChanged_1);
             // 
             // label3
             // 

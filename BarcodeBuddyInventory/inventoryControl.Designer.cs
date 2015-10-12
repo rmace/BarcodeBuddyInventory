@@ -256,6 +256,7 @@
             this.Controls.Add(this.txtItemCount);
             this.Controls.Add(this.lstItems);
             this.Controls.Add(this.mnuFileMenu);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mnuFileMenu;
             this.Name = "inventoryControl";
             this.Text = "Barcode Buddy Inventory Control";

@@ -52,7 +52,8 @@ namespace BarcodeBuddyScan
             txtGoToItem.AutoCompleteCustomSource = ItemCollection;
         }
 
-        private void txtGoToItem_TextChanged(object sender, EventArgs e)
+
+        private void showChangedItem()
         {
             // Now that we have an item, let's position the item list at that item.
             int index = txtGoToItem.Text.IndexOf(",");
@@ -87,6 +88,15 @@ namespace BarcodeBuddyScan
 
         private void lstItems_SelectedIndexChanged(object sender, EventArgs e)
         {
+        }
+
+        private void txtGoToItem_TextChanged_1(object sender, EventArgs e)
+        {
+            showChangedItem();
+        }
+
+        private void lstItems_Click(object sender, EventArgs e)
+        {
             // So the operator has scanned a new barcode, and now he has selected the
             // associated item from the list.  We want to do several things here:
             // We want to save the new barcode association to the inventory file.
@@ -94,7 +104,7 @@ namespace BarcodeBuddyScan
             // screen previously had focus 
             // and finally, we want to put the newly selected item into the keyboard buffer.
             inventoryItem i = (inventoryItem)lstItems.SelectedItem;
-            barcode b = new barcode(BarcodeData, i);
+            i.assignBarcode(BarcodeData);
             inventoryItem.mergeItemsIntoExistingFile(Properties.Settings.Default.FilePath);
 
             this.Close();
