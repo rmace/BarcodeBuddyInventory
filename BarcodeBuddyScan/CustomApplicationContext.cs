@@ -190,7 +190,11 @@ namespace BarcodeBuddyScan
         }
 
         // null out the forms so we know to create a new one.
-        private void scanForm_Closed(object sender, EventArgs e) { scanForm = null; }
+        private void scanForm_Closed(object sender, EventArgs e)
+        {
+            scanForm.releaseScanner();
+            scanForm = null;
+        }
         private void inventoryForm_Closed(object sender, EventArgs e) { inventoryForm = null; }
 
         #endregion the child forms

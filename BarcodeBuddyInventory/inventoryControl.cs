@@ -12,16 +12,29 @@ using System.Windows.Forms;
 Class Name:  inventoryControl
 Description:  Inventory Control Form
    This form is the main program window for the Barcode Buddy Inventory Tool.  The Barcode
-   Buddy Inventory Tool allows the user to manipulate the list of inventory items and their 
-   associated barcodes.  Tihe user can open an inventory file, import inventory items into the
-   inventory list, navigate through the inventory items in the list, associated barcodes with
-   the inventory items, and save the inventory items back into the barcode file, save them into
-   a new inventory list, or merge the items into an existing barcode file.
+   Buddy Inventory Tool maintains a list of inventory items with their associated barcodes.
+   An item can have as many associated barcodes as the user desires.
    
+   This form allows the user to open an inventory file, import inventory items into the
+   inventory list, navigate through the inventory items in the list, associated barcodes with
+   the inventory items, and merge the inventory item changes back into the inventory file,
+   and/or save the entire inventory list to a new file.
+
+   Barcodes are associated with an inventory item by simply selecting an item from the list and
+   then scanning the barcode.  If it is a new barcode having never been seen by the system, then
+   it will associate the barcode with the selected inventory item.  If the barcode is known by the
+   system, it will move the selected item in the inventory item list to the item that is
+   associated with that barcode.
+      
 Purpose:  This form is used to view and change inventory items with their associated barcodes
 
 Theory of Operation
 
+    This application uses the scanToolClasses to maintain a list of inventory items.
+    
+    Controls associated with this class:
+    
+    lst 
     
 Date:  09/12/2015
 Programmer:  Russell Mace 
@@ -158,6 +171,24 @@ namespace BarcodeBuddyInventory
             catch (Exception exc)
             {
                 MessageBox.Show("inventoryControl:connectScanner - Failed to Open Connection to Scanner: " + exc.ToString());
+            }
+        }
+
+        private void releaseScanner()
+        {
+            try
+            {
+                if (handHeldScanner != null)
+                {
+                    handHeldScanner.DataEventEnabled = false;
+                    handHeldScanner.DeviceEnabled = false;
+                    handHeldScanner.ReleaseDevice();
+                    handHeldScanner.Close();
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("inventoryControl:releaseScanner - Failed to Release Connection to Scanner: " + exc.ToString());
             }
         }
 
@@ -327,6 +358,16 @@ namespace BarcodeBuddyInventory
             inventoryItem i = b.getItem();
             i.removeBarcode(b);
             updateBarcodeList(i);
+        }
+
+        private void handHeldScanner_DirectIOEvent(object sender, AxOposScanner_CCO._IOPOSScannerEvents_DirectIOEventEvent e)
+        {
+            MessageBox.Show("HandHeldScanner_DirectIOEvent activated.");
+        }
+
+        private void inventoryControl_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            releaseScanner();
         }
     }
 }

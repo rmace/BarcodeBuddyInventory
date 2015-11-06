@@ -74,6 +74,25 @@ namespace BarcodeBuddyScan
             }
         }
 
+        public void releaseScanner()
+        {
+            try
+            {
+                if (handHeldScanner != null)
+                {
+                    handHeldScanner.DataEventEnabled = false;
+                    handHeldScanner.DeviceEnabled = false;
+                    handHeldScanner.ReleaseDevice();
+                    handHeldScanner.Close();
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("inventoryControl:releaseScanner - Failed to Release Connection to Scanner: " + exc.ToString());
+            }
+        }
+
+
         public void insertItemIntoKeyboardBuffer(inventoryItem itm)
         {
             System.Windows.Forms.SendKeys.Send(itm.ItemID + "\r");

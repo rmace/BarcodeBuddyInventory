@@ -40,7 +40,7 @@
             this.handHeldScanner.Location = new System.Drawing.Point(32, 42);
             this.handHeldScanner.Name = "handHeldScanner";
             this.handHeldScanner.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("handHeldScanner.OcxState")));
-            this.handHeldScanner.Size = new System.Drawing.Size(192, 23);
+            this.handHeldScanner.Size = new System.Drawing.Size(192, 26);
             this.handHeldScanner.TabIndex = 0;
             this.handHeldScanner.DataEvent += new AxOposScanner_CCO._IOPOSScannerEvents_DataEventEventHandler(this.handHeldScanner_DataEvent);
             // 
@@ -60,6 +60,7 @@
             this.ClientSize = new System.Drawing.Size(410, 80);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.handHeldScanner);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ScannerConfig";
             this.Text = "ScannerConfig";
             ((System.ComponentModel.ISupportInitialize)(this.handHeldScanner)).EndInit();

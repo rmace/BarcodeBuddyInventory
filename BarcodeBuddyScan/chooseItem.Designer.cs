@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(chooseItem));
             this.txtScanData = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lstItems = new System.Windows.Forms.ListBox();
@@ -111,6 +112,7 @@
             this.Controls.Add(this.lstItems);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtScanData);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "chooseItem";
             this.Text = "chooseItem";
             this.Load += new System.EventHandler(this.chooseItem_Load);

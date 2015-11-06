@@ -13,6 +13,9 @@ into the list of inventory items.
 
 Theory of Operation:
 
+    This isn't really a class that is intended to have instances of the class created.
+    Its real intent is to just contain static methods that can be used in other parts of the program.
+
 Date:  09/18/2015
 Programmer:  Russell Mace 
 */

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inventory));
             this.inventoryFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.txtFileName = new System.Windows.Forms.TextBox();
             this.lblFilename = new System.Windows.Forms.Label();
@@ -88,6 +89,7 @@
             this.Controls.Add(this.buttonSelectFile);
             this.Controls.Add(this.lblFilename);
             this.Controls.Add(this.txtFileName);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Inventory";
             this.Text = "Inventory";
             this.ResumeLayout(false);

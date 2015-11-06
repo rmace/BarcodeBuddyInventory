@@ -82,13 +82,17 @@
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.openToolStripMenuItem.Text = "&Load File...";
+            this.openToolStripMenuItem.ToolTipText = "Load Inventory Items from a selected file.";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
-            this.saveToolStripMenuItem.Text = "&Save...";
+            this.saveToolStripMenuItem.Text = "&Merge...";
+            this.saveToolStripMenuItem.ToolTipText = "Merge any changes into an existing inventory item file.  The user must select an " +
+    "existing inventory file.  This selection will not overwrite any existing data in" +
+    " the file.";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
@@ -96,6 +100,8 @@
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.saveAsToolStripMenuItem.Text = "Save &As...";
+            this.saveAsToolStripMenuItem.ToolTipText = "Save data into a new or existing file.  This selection overwrites any existing da" +
+    "ta in the file.";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // importToolStripMenuItem
@@ -103,6 +109,9 @@
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
             this.importToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.importToolStripMenuItem.Text = "&Import...";
+            this.importToolStripMenuItem.ToolTipText = "Import new items from a comma separated value (.CSV) file into the inventory list" +
+    ".  When importing items, items that are already in the list will not be changed." +
+    "  Only new items will be added.";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
@@ -152,6 +161,7 @@
             this.handHeldScanner.Size = new System.Drawing.Size(192, 192);
             this.handHeldScanner.TabIndex = 4;
             this.handHeldScanner.DataEvent += new AxOposScanner_CCO._IOPOSScannerEvents_DataEventEventHandler(this.handHeldScanner_DataEvent);
+            this.handHeldScanner.DirectIOEvent += new AxOposScanner_CCO._IOPOSScannerEvents_DirectIOEventEventHandler(this.handHeldScanner_DirectIOEvent);
             // 
             // lstBarcodes
             // 
@@ -260,6 +270,7 @@
             this.MainMenuStrip = this.mnuFileMenu;
             this.Name = "inventoryControl";
             this.Text = "Barcode Buddy Inventory Control";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.inventoryControl_FormClosed);
             this.Load += new System.EventHandler(this.inventoryControl_Load);
             this.mnuFileMenu.ResumeLayout(false);
             this.mnuFileMenu.PerformLayout();
